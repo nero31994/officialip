@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Channel Player</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.4/shaka-player.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    select, video {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Channel Player</h1>
+  <select id="channelSelector">
+    <option value="" disabled selected>Select a Channel</option>
+  </select>
+  <video id="videoPlayer" width="800" height="450" controls></video>
+
+  <script>
+    const channels = [
+      { name: "AXN (SD)", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_axn_sd.mpd", drm: { kid: "fd5d928f5d974ca4983f6e9295dfe410", key: "3aaa001ddc142fedbb9d5557be43792f" } },
+      { name: "Bilyonaryo Channel", url: "https://qp-pldt-live-grp-05-prod.akamaized.net/out/u/bilyonaryoch.mpd", drm: { kid: "227ffaf09bec4a889e0e0988704d52a2", key: "b2d0dce5c486891997c1c92ddaca2cd2" } },
+      { name: "Buko (SD)", url: "https://qp-pldt-live-grp-06-prod.akamaized.net/out/u/cg_buko_sd.mpd", drm: { kid: "d273c085f2ab4a248e7bfc375229007d", key: "7932354c3a84f7fc1b80efa6bcea0615" } },
+      // Add more channels here...
+    ];
+
+    const channelSelector = document.getElementById('channelSelector');
+    const videoPlayer = document.getElementById('videoPlayer');
+
+    // Populate the channel dropdown
+    channels.forEach((channel, index) => {
+      const option = document.createElement('option');
+      option.value = index;
+      option.textContent = channel.name;
+      channelSelector.appendChild(option);
+    });
+
+    // Initialize Shaka Player
+    const player = new shaka.Player(videoPlayer);
+
+    // Load the selected channel
+    channelSelector.addEventListener('change', async () => {
+      const selectedChannel = channels[channelSelector.value];
+      if (selectedChannel) {
+        try {
+          // Configure DRM if available
+          if (selectedChannel.drm && selectedChannel.drm.kid && selectedChannel.drm.key) {
+            player.configure({
+              drm: {
+                clearKeys: {
+                  [selectedChannel.drm.kid]: selectedChannel.drm.key,
+                },
+              },
+            });
+          }
+
+          // Load the channel
+          await player.load(selectedChannel.url);
+          console.log(`Playing: ${selectedChannel.name}`);
+        } catch (error) {
+          console.error('Error loading channel:', error);
+          alert('Failed to load the channel. Check the console for more details.');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
