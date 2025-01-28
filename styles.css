@@ -71,7 +71,7 @@ header h1 {
 .channel-list li {
     padding: 12px 15px;
     background-color: #1a1a1a; /* Dark gray */
-    margin-bottom: 4px;
+    margin-bottom: 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
