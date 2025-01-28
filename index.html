@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Channel Streamer</title>
+    <title>NERO TV</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.0/shaka-player.ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.5.0/shaka-player.compiled.js"></script>
 </head>
 <body>
     <header>
@@ -18,8 +18,10 @@
             <input id="searchInput" type="text" placeholder="Search channels..." oninput="searchChannels()">
             <ul id="channelList" class="channel-list"></ul>
         </aside>
-        <main id="video-container">
-            <video id="video" controls autoplay></video>
+        <main>
+            <div id="video-container">
+                <video id="video" controls autoplay></video>
+            </div>
         </main>
     </div>
 </body>
