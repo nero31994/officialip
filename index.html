@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Channel Player</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.4/shaka-player.min.js"></script>
-  <script src="channels.js" defer></script>
-  <script src="player.js" defer></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-    select, video {
-      margin: 20px 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Channel Streamer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.0/shaka-player.ui.min.js"></script>
 </head>
 <body>
-  <h1>Channel Player</h1>
-  <select id="channelSelector">
-    <option value="" disabled selected>Select a Channel</option>
-  </select>
-  <video id="videoPlayer" width="800" height="450" controls></video>
+    <header>
+        <h1>Channel Streamer</h1>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </header>
+    <div class="container">
+        <aside id="menu">
+            <input id="searchInput" type="text" placeholder="Search channels..." oninput="searchChannels()">
+            <ul id="channelList" class="channel-list"></ul>
+        </aside>
+        <main id="video-container">
+            <video id="video" controls autoplay></video>
+        </main>
+    </div>
 </body>
 </html>
