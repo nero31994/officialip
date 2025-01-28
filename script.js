@@ -13,24 +13,25 @@ const channels = [
 
 document.addEventListener('DOMContentLoaded', async () => {
     const videoElement = document.getElementById('video');
-    const videoContainer = document.getElementById('video-container');
     const channelListElement = document.getElementById('channelList');
 
+    // Initialize Shaka Player
     const player = new shaka.Player(videoElement);
-    const ui = new shaka.ui.Overlay(player, videoContainer, videoElement);
 
+    // Error handling
     player.addEventListener('error', (event) => {
         console.error('Error code', event.detail.code, 'object', event.detail);
     });
 
     async function loadChannel(channel) {
         try {
+            // Handle MP4 videos directly
             if (channel.src.endsWith('.mp4')) {
                 videoElement.src = channel.src;
                 videoElement.play();
                 console.log(`Loaded MP4 channel: ${channel.name}`);
             } else {
-                player.configure({ drm: {} });
+                // Configure and load for non-MP4 streams
                 await player.load(channel.src);
                 console.log(`Loaded channel: ${channel.name}`);
             }
@@ -55,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     populateChannels();
 
+    // Search functionality
     window.searchChannels = () => {
         const query = document.getElementById('searchInput').value.toLowerCase();
         document.querySelectorAll('.channel-list li').forEach((li) => {
